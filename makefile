@@ -37,13 +37,13 @@ start	:
 $(dict).cc :
 	rootcling -f $(dict).cc -s $(lib) -rml $(lib) -rmf $(rootmap) -c $(head) LinkDef.h
 
-%.o	: %.cc	
+%.o	: %.cc
 	$(cxx) $(cxxflags) $(incflags) -c -o $@ $<
 
 $(lib) 	: $(objs) $(dict).o
 	$(so) $(soflags) $(libs) -o $@ $(objs) $(dict).o
 
-clean	:	
+clean	:
 	rm -f ./#* ./*~ ./*.*~	
 	rm -f ./src/#* ./src/*~ ./src/*.*~
 	rm -f ./mac/#* ./mac/*~ ./mac/*.*~
