@@ -58,5 +58,5 @@ clean	:
 fresh 	: clean all
 
 .PHONY: examples
-examples:
+examples: all
 	make -C examples all
