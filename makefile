@@ -42,7 +42,7 @@ start	:
 	@mkdir -p lib work
 
 $(dict).cc : 
-	@rootcling -f $(dict).cc -s $(lib) -rml $(lib) -rmf $(rootmap) $(incflags) -c $(head) LinkDef.h 
+	@rootcling -f $(dict).cc -s $(lib) -rml $(lib) -rmf $(rootmap) -c $(head) LinkDef.h
 	@echo ' * Building ( dic ) :' $@
 	@echo ''
 
