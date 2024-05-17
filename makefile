@@ -30,53 +30,34 @@ libs += $(shell root-config --ldflags --libs) -lMinuit -lMinuit2 -lGeom -lXMLIO
 libs += -lfftw3
 libs += `gsl-config --libs`
 
-all	: start $(dict).cc $(objs) $(lib) end
+all	: start $(dict).cc $(objs) $(lib)
 
-start	: 
-	@echo ''		
-	@echo ' * PMTCalib make ... '
-	@echo ''
-	@rm -f ./#* ./*~ ./*.*~	
-	@rm -f ./src/#* ./src/*~ ./src/*.*~
-	@rm -f ./mac/#* ./mac/*~ ./mac/*.*~
-	@mkdir -p lib work
+start	:
+	mkdir -p lib work
 
-$(dict).cc : 
-	@rootcling -f $(dict).cc -s $(lib) -rml $(lib) -rmf $(rootmap) -c $(head) LinkDef.h
-	@echo ' * Building ( dic ) :' $@
-	@echo ''
+$(dict).cc :
+	rootcling -f $(dict).cc -s $(lib) -rml $(lib) -rmf $(rootmap) -c $(head) LinkDef.h
 
 %.o	: %.cc	
-	@$(cxx) $(cxxflags) $(incflags) -c -o $@ $<
-	@echo ' * Building ( obj ) :' $@
-	@echo ''
+	$(cxx) $(cxxflags) $(incflags) -c -o $@ $<
 
 $(lib) 	: $(objs) $(dict).o
-	@$(so) $(soflags) $(libs) -o $@ $(objs) $(dict).o
-	@echo ' * Building ( lib ) :' $@
-	@echo ''
-
-end	:
-	@echo ' * PMTCalib done !'
-	@echo ''
+	$(so) $(soflags) $(libs) -o $@ $(objs) $(dict).o
 
 clean	:	
-	@echo ''	
-	@echo ' * PMTCalib clean ...'
-	@echo ''
-	@rm -f ./#* ./*~ ./*.*~	
-	@rm -f ./src/#* ./src/*~ ./src/*.*~
-	@rm -f ./mac/#* ./mac/*~ ./mac/*.*~
-	@rm -f $(dict)*.cc
-	@rm -f $(dict)*.o
-	@rm -f ./src/*.o
-	@rm -f ./$(lib)
-	@rm -f ./$(lib:.so=_rdict.pcm)
-	@rm -f ./$(lib:.so=.rootmap)
-	@make -C examples clean
+	rm -f ./#* ./*~ ./*.*~	
+	rm -f ./src/#* ./src/*~ ./src/*.*~
+	rm -f ./mac/#* ./mac/*~ ./mac/*.*~
+	rm -f $(dict)*.cc
+	rm -f $(dict)*.o
+	rm -f ./src/*.o
+	rm -f ./$(lib)
+	rm -f ./$(lib:.so=_rdict.pcm)
+	rm -f ./$(lib:.so=.rootmap)
+	make -C examples clean
 
-fresh 	: clean all 
+fresh 	: clean all
 
 .PHONY: examples
 examples:
-	@make -C examples all
+	make -C examples all
