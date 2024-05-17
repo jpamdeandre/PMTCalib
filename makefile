@@ -14,7 +14,7 @@ head = $(wildcard src/*.h)
 objs = $(srcs:.cc=.o)
 
 cxx = $(shell root-config --cxx)
-cxxflags = -g -W -O -Wall -Wno-deprecated -Werror -fPIC -std=c++1y
+cxxflags = -g -W -march=native -O -Wall -Wno-deprecated -Werror -fPIC -std=c++1y
 
 incflags = -I.
 incflags += $(shell root-config --cflags | sed -e "s/-I/-isystem/g")
@@ -22,7 +22,6 @@ GSL_PREFIX=$(shell gsl-config --prefix)
 ifneq ($(GSL_PREFIX),/usr)
 	incflags += $(shell gsl-config --cflags | sed -e "s/-I/-isystem/g")
 endif
-incflags += -I/$(PMTCALIB)/src/
 
 so = $(shell root-config --ld)
 soflags = -g -shared -fPIC
