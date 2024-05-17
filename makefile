@@ -27,7 +27,7 @@ so = $(shell root-config --ld)
 soflags = -g -shared -fPIC
 libs += $(shell root-config --ldflags --libs) -lMinuit -lMinuit2 -lGeom -lXMLIO
 libs += -lfftw3
-libs += `gsl-config --libs`
+libs += $(shell gsl-config --libs)
 
 all	: start $(dict).cc $(objs) $(lib)
 
