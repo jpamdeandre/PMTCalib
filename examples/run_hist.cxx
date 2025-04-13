@@ -47,15 +47,7 @@ int main(int argc, char ** argv)
   c1->SetLogy();
 
   Double_t Q0 = 0.0;
-  Double_t s0 = 2.0;
-  Pedestal ped( Q0, s0 );
-  
-  Double_t lambda = 1.0/40.0;
-  Double_t theta = 8.4;
-  Double_t alpha = 1.0/8.0;
-  Double_t w = 0.2;
-  Double_t p[4] = { lambda, theta, alpha, w };
-  SPEResponse gamma( PMType::GAMMA, p );
+  Double_t s0 = 10.0;
 
   Int_t nbins = hist->GetNbinsX();
   Double_t xmin = hist->GetXaxis()->GetBinLowEdge(1);
@@ -113,32 +105,20 @@ int main(int argc, char ** argv)
     }
   
   
-  Double_t Gtrue = ( w/alpha+(1.0-w)/lambda );
   Double_t Gfit = ( fit.vals[7]/fit.vals[6]+(1.0-fit.vals[7])/fit.vals[4] ); 
   
   
-  cout << " True Gain : " << Gtrue << endl;
   cout << " BF Gain   : " << Gfit  << endl;
-  cout << " Deviation : " << ( Gfit/Gtrue - 1.0 )*100.0 << endl;
   
-  cout << "" << endl;
   cout << "" << endl;
   
   
 
-  
-  cout << " ... the macro ends ! " << endl;
-	  
-  cout << "" << endl;
   
       
   duration<double> dura = duration_cast<duration<double>>(end-start);
     
   cout << " ---> "<< dura.count() << " seconds" << endl;  
-    
-  cout << "" << endl;
-
-  cout << "" << endl;
     
   myapp->Run();
   return 0;
